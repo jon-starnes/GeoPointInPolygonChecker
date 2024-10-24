@@ -5,13 +5,13 @@ export class checkPointInPolygon {
         let trueFalse: boolean = false;
 
         // Check if geoObjects and its all method are defined
-        if (geoObjects && typeof geoObjects.all) {
+        if (geoObjects && typeof geoObjects.all === 'function') {
             const geoShapes = geoObjects;
 
             // Iterate over all geoShapes in the set
-            geoObjects.all().forEach(terr => {
+            geoObjects.all().forEach(obj => {
                 // Access the geometry property
-                const geoData: GeoShape | any = terr.geometry;
+                const geoData: GeoShape | any = obj.geometry;
 
                 if (geoData.type === "MultiPolygon") {
                     // Create the GeoJSON string from the geometry property
@@ -30,7 +30,7 @@ export class checkPointInPolygon {
                     });
                 } else if (geoData.type === "Polygon") {
                     // If the geometry is a Polygon, use the parsePolygon function
-                    const polygon = this.parsePolygon(JSON.stringify(terr.geometry));
+                    const polygon = this.parsePolygon(JSON.stringify(obj.geometry));
                     const cornersX = polygon.map(coord => coord.x);
                     const cornersY = polygon.map(coord => coord.y);
 
@@ -45,7 +45,7 @@ export class checkPointInPolygon {
 
     // Main raycasting algorithm required by isPointInsidePolygon
     checkPointInPolygon(x, y, cornersX, cornersY) {
-        let i: number, j: number = cornersX.length - 1;
+        let i, j = cornersX.length - 1;
         let oddNodes: boolean = false;
         const epsilon = 1e-10; // Small value to account for floating-point errors
 
@@ -70,10 +70,10 @@ export class checkPointInPolygon {
     }
 
     // Function to parse a single polygon in a geoJSON string
-    parsePolygon(geoJson) {
-        console.log(geoJson);
+    parsePolygon(geoJson: string) {
+        // console.log(geoJson);
         const geoData = JSON.parse(geoJson);
-        const polygon : { x: Double, y: Double }[] = []
+        const polygon = [];
 
       // iterate over geoData to get the coordinates in the linearRings
         for (let i = 0; i < geoData.linearRings[0].length; i++) {
@@ -94,13 +94,13 @@ export class checkPointInPolygon {
             return [];
           }
 
-        const multiPolygon: { x: number, y: number }[][] = [];
+        const multiPolygon = [];
 
         // Is geoData standard MultiPolygon format?
         if (geoData.type === "MultiPolygon" && Array.isArray(geoData.coordinates)) {
             // Loop through each polygon in the MultiPolygon
             for (const polygon of geoData.coordinates) {
-                const linearRings: { x: number, y: number }[] = [];
+                const linearRings = [];
                 // loop through linear rings inside the polygon
                 for (const ring of polygon) {
                     for (const coord of ring) {
@@ -113,7 +113,7 @@ export class checkPointInPolygon {
         // Check if the data parses like geometry data with polygons and linearRings
         else if (geoData.polygons) {
             for (const polygon of geoData.polygons) {
-                const linearRings: { x: number, y: number }[] = [];
+                const linearRings = [];
                 for (const ring of polygon.linearRings) {
                     for (const point of ring) {
                         linearRings.push({
