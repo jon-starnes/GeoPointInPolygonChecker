@@ -1,6 +1,4 @@
-# TypeScript_functions
-TypeScript Functions
-
+# GeoPoint In Polygon Checker
 ## Check Point in Polygon or MultiPolygon
 
 ### The isPointInsidePolygon function checks if a given point is inside a polygon. It uses the ray-casting algorithm to determine the position of the point relative to the polygon. Here's how you can use it:
