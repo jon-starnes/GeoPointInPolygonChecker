@@ -20,5 +20,5 @@ The **checkUserPoint()** function is designed to be triggered by a button on a w
 You can test a [demo the function here](https://jon-starnes.github.io/geochecker.html) with different x, y coordinates. The sample data is currently hard coded to San Francisco but the next update will allow fetching OpenStreetMap data from different cities. 
 
 ## Future Updates
-- Add input for specific search region for other city shapes from OpenStreet Maps
+- Display the map shapes of the input and coordinates from OpenStreet Maps
 - A potential option to use a URL from another open source geojson data source.
