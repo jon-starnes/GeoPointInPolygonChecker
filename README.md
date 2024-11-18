@@ -1,24 +1,22 @@
-# GeoPoint In Polygon Checker
-## Check Point in Polygon or MultiPolygon
+# ReadMe
+This project provides a set of JavaScript functions that fetch GeoJSON data from OpenStreetMap (using the Nominatim API) and allow users to check if specific geographic coordinates (longitude and latitude) fall within a defined polygon or multipolygon area. The example focuses on checking whether a point is inside the boundaries of San Francisco.
 
-### The isPointInsidePolygon function checks if a given point is inside a polygon. It uses the ray-casting algorithm to determine the position of the point relative to the polygon. Here's how you can use it:
+## How It Works
+The project is composed of three main parts that work together to fetch data from OpenStreetMaps, then checks whether specific X, Y coordinates are inside a polygon shape or a set of MultiPolygon shapes from a map:
 
-const point = [5, 5];
-const polygon = [[0, 0], [10, 0], [10, 10], [0, 10]];
-const result = isPointInsidePolygon(point, polygon);
-console.log(result); // true or false
+## Fetching GeoJSON Data:
+The function **fetchGeoJsonFromNominatim()** retrieves Sample boundary data for San Francisco from the Nominatim OpenStreetMap API. The data is in GeoJSON format, which includes information about polygons or multipolygons that define the region.
 
-### Raycasting Logic in checkPointInPolygon
-The checkPointInPolygon function uses the ray-casting algorithm to determine if a point is inside a polygon. The algorithm works by drawing a horizontal line to the right of each point and counting how many times the line intersects with the polygon's edges. If the number of intersections is odd, the point is inside the polygon; if even, the point is outside.
+## Checking if a Point is Inside a Polygon:
+The **CheckPointInPolygon** class contains methods to determine if a point (defined by longitude and latitude) is inside a polygon or multipolygon using a ray-casting algorithm.
 
-### parsePolygon Function
-The parsePolygon function parses a polygon from a given input. It typically converts the input data into a format that can be used for further geospatial computations.
+The **isPointInsidePolygon()** method handles both Polygon and MultiPolygon types by checking whether the given point lies within the specified boundaries.  
 
-Usage:
+The **checkPointInPolygon()** method uses the ray-casting technique to detect if a point is inside a polygon by counting how many times a ray crosses the polygon's edges.
 
-### parseMultiPolygon Function
-The parseMultiPolygon function parses a multi-polygon from a given input. It converts the input data into a format that can be used for geospatial computations involving multiple polygons.
+## Front-End Integration:
+The **checkUserPoint()** function is designed to be triggered by a button on a webpage. It retrieves user input for longitude and latitude, fetches the GeoJSON data, and checks if the provided point falls within the San Francisco boundaries.
 
-Usage:
-
-These functions are essential for handling geospatial data and performing operations like point-in-polygon checks and parsing polygon data for further analysis.
+## Future Updates
+- Add input for specific search region for other city shapes from OpenStreet Maps
+- A potential option to use a URL from another open source geojson data source.
